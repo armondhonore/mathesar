@@ -1,0 +1,32 @@
+application:
+  name: mathesar
+  pods:
+  - name: app
+    image: mathesar/mathesar-prod:latest
+    path: /
+    servicePorts:
+    - 8000
+    vars:
+      SECRET_KEY: "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1"
+      ALLOWED_HOSTS: "relaxed-weasel-mathesar.cloud.nexlayer.ai,localhost"
+      DJANGO_DATABASE_URL: "postgresql://mathesar:mathesar@postgres.pod:5432/mathesar"
+      MATHESAR_DATABASES: "(mathesar_db|postgresql://mathesar:mathesar@postgres.pod:5432/user_db)"
+      DJANGO_SUPERUSER_PASSWORD: "nexlayer2024"
+    volumes:
+    - name: mathesar-static
+      mountPath: /code/static
+      size: 2Gi
+    - name: mathesar-media
+      mountPath: /code/media
+      size: 5Gi
+  - name: postgres
+    image: postgres:16-alpine
+    servicePorts:
+    - 5432
+    vars:
+      POSTGRES_USER: mathesar
+      POSTGRES_PASSWORD: mathesar
+    volumes:
+    - name: mathesar-db
+      mountPath: /var/lib/postgresql/data
+      size: 5Gi
