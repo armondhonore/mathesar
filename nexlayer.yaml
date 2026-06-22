@@ -2,7 +2,7 @@ application:
   name: mathesar
   pods:
   - name: app
-    image: mathesar/mathesar-prod:latest
+    image: mirror.gcr.io/mathesar/mathesar-prod:latest
     path: /
     servicePorts:
     - 8000
@@ -20,7 +20,7 @@ application:
       mountPath: /code/media
       size: 5Gi
   - name: postgres
-    image: postgres:16-alpine
+    image: mirror.gcr.io/library/postgres:16-alpine
     servicePorts:
     - 5432
     vars:
